@@ -89,6 +89,13 @@ body{
 			z-index: 300;
 		}
 
+		#check{
+			position: absolute;
+			left: 640px;
+			top: 55px;
+			z-index: 200;
+		}
+
 		.inativo{
 			color: #E9EBDA;
 		}
