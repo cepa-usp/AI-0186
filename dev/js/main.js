@@ -202,7 +202,7 @@ function sliderMoving(x, y){
 	raphs[tgId].gPt.attr("cy", newPt.y);
 	raphs[tgId].pt = newPt;
 
-	ds.html("Distância: " + Math.abs(sliderVal).toFixed(0));
+	ds.html("Distância: " + sliderVal.toFixed(0));
 }
 
 function convertPathToArray(path){
