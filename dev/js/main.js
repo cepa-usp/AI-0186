@@ -267,21 +267,39 @@ function getRpath(){
 
 	var caminho3 = "M" + cx + "," + cy;
 
-	
 	var raio = 50;
+
 	var anguloInicial = Math.atan2(posPtF.y - cy,posPtF.x - cx);
 	var anguloFinal = Math.atan2(posPt.y - cy,posPt.x - cx);
-	var passo = anguloFinal > anguloInicial ? (anguloFinal - anguloInicial)/100 : (anguloInicial - anguloFinal)/100;
+	
+
+	if(anguloInicial < 0) anguloInicial += 2 * Math.PI;
+	if(anguloFinal < 0) anguloFinal += 2 * Math.PI;
+
+	anguloInicial *= 180/Math.PI;
+	anguloFinal *= 180/Math.PI;
+
+	//var passo = anguloFinal > anguloInicial ? (anguloFinal - anguloInicial)/100 : (anguloInicial - anguloFinal)/100;
+	var passo = 1 * (anguloFinal > anguloInicial ? 1 : -1);//(anguloFinal - anguloInicial)/100;
+	console.log(anguloInicial, anguloFinal, passo);
 
 	var count = 0;
+
 	
 	for (var i = anguloInicial; i < anguloFinal; i+=passo) {
-		var rx = raio * Math.cos(i);
-		var ry = raio * Math.sin(i);
+		var ang = i;
+		if(ang > 180){
+			ang -= 360;
+		}
+		ang *= Math.PI/180;
+
+		//if(ang > Math.PI) ang -= 2 * Math.PI;
+		var rx = raio * Math.cos(ang);
+		var ry = raio * Math.sin(ang);
 		caminho3 += "L" + (rx + cx) + "," + (ry + cy);
 
-		count++;
-		if(count > 50) break;
+		//count++;
+		//if(count > 50) break;
 	};
 
 	caminho3 += "z";
