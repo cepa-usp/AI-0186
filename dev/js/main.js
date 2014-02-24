@@ -57,6 +57,8 @@ function init(){
 	prev.on("click", retornar);
 
 	$("#slider").hide();
+	$("#distAngle").hide();
+	$("#show").on("click", showhideAngle);
 
 	montaTela(currentTela);
 }
@@ -220,25 +222,24 @@ function sliderMoving(x, y){
 
 	ds.html("Distância: " + sliderVal.toFixed(0));
 
+	showhideAngle();
+}
+
+function showhideAngle(){
 	if($("#show").is(":checked")){
 		if(raphs[tgId].angle) raphs[tgId].angle.remove();
 		raphs[tgId].angle = raphs[tgId].r.set();
+		$("#distAngle").show();
 		var pths = getRpath();
-		//for (var i = 0; i < pths.length; i++) {
-			raphs[tgId].angle.push(raphs[tgId].r.path(pths[0]));
-			raphs[tgId].angle.push(raphs[tgId].r.path(pths[1]));
-			raphs[tgId].angle.push(raphs[tgId].r.path(pths[2]).attr("fill", "#FF0000"));
-		//};
 		
-		/*if(raphs[tgId].angle){
-			raphs[tgId].angle.attr("path", getRpath());
-		}else{
-			raphs[tgId].angle = raphs[tgId].r.path(getRpath());
-		}*/
+		raphs[tgId].angle.push(raphs[tgId].r.path(pths[0]));
+		raphs[tgId].angle.push(raphs[tgId].r.path(pths[1]));
+		raphs[tgId].angle.push(raphs[tgId].r.path(pths[2]).attr("fill", "#FF0000"));
 	}else{
 		if(raphs[tgId].angle) {
 			raphs[tgId].angle.remove();
 			raphs[tgId].angle = null;
+			$("#distAngle").hide();
 		}
 	}
 }
@@ -273,33 +274,51 @@ function getRpath(){
 	var anguloFinal = Math.atan2(posPt.y - cy,posPt.x - cx);
 	
 
-	if(anguloInicial < 0) anguloInicial += 2 * Math.PI;
-	if(anguloFinal < 0) anguloFinal += 2 * Math.PI;
+	//if(anguloInicial < 0) anguloInicial += 2 * Math.PI;
+	//if(anguloFinal < 0) anguloFinal += 2 * Math.PI;
 
 	anguloInicial *= 180/Math.PI;
 	anguloFinal *= 180/Math.PI;
 
+	var max;
+	var min;
+
+	if(anguloInicial > 0){
+		min = anguloInicial - 180;
+		if(anguloFinal < min){
+			anguloFinal = 180 + (180 + anguloFinal);
+		}
+	}else{
+		max = anguloInicial + 180;
+		if(anguloFinal > max){
+			anguloFinal = -179.99 - (180 - anguloFinal);
+		}
+	}
+
 	//var passo = anguloFinal > anguloInicial ? (anguloFinal - anguloInicial)/100 : (anguloInicial - anguloFinal)/100;
-	var passo = 1 * (anguloFinal > anguloInicial ? 1 : -1);//(anguloFinal - anguloInicial)/100;
-	console.log(anguloInicial, anguloFinal, passo);
+	var passo = 1// * (anguloFinal > anguloInicial ? 1 : -1);//(anguloFinal - anguloInicial)/100;
+	//console.log(anguloFinal - anguloInicial);
+	$("#distAngle").html((anguloFinal - anguloInicial).toFixed(1) + "º");
+
+	if(anguloFinal < anguloInicial){
+		var aux = anguloFinal;
+		anguloFinal = anguloInicial;
+		anguloInicial = aux;
+	}
 
 	var count = 0;
 
 	
 	for (var i = anguloInicial; i < anguloFinal; i+=passo) {
-		var ang = i;
-		if(ang > 180){
-			ang -= 360;
-		}
-		ang *= Math.PI/180;
+		var ang = i * Math.PI/180;
 
 		//if(ang > Math.PI) ang -= 2 * Math.PI;
 		var rx = raio * Math.cos(ang);
 		var ry = raio * Math.sin(ang);
 		caminho3 += "L" + (rx + cx) + "," + (ry + cy);
 
-		//count++;
-		//if(count > 50) break;
+		count++;
+		if(count > 180) break;
 	};
 
 	caminho3 += "z";

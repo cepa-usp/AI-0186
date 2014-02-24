@@ -91,9 +91,18 @@ body{
 
 		#check{
 			position: absolute;
-			left: 640px;
+			left: 635px;
 			top: 55px;
 			z-index: 200;
+		}
+
+		#distAngle{
+			position: absolute;
+			left: 640px;
+			top: 75px;
+			width: 150px;
+			text-align: center;
+			z-index: 300;
 		}
 
 		.inativo{
