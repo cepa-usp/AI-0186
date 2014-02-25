@@ -268,16 +268,18 @@ function sliderMoving(x, y){
 				pathsDrag.push(raphs[tgId].path.getSubpath(from, to));
 			}
 		}
-		
+		//console.log(from, to)
 
 		//raphs[tgId].subPathString = raphs[tgId].path.getSubpath(from, to);
 
 		if(raphs[tgId].subPath) raphs[tgId].subPath.remove();//raphs[tgId].subPath.attr("path", raphs[tgId].subPathString);
 		//else raphs[tgId].subPath = raphs[tgId].r.path(raphs[tgId].subPathString).attr("stroke-width", "2");
-		raphs[tgId].subPath = raphs[tgId].r.set();
-		for (var i = 0; i < pathsDrag.length; i++) {
-			raphs[tgId].subPath.push(raphs[tgId].r.path(pathsDrag[i]).attr("stroke-width", "2"));
-		};
+		if(from != to){
+			raphs[tgId].subPath = raphs[tgId].r.set();
+			for (var i = 0; i < pathsDrag.length; i++) {
+				raphs[tgId].subPath.push(raphs[tgId].r.path(pathsDrag[i]).attr("stroke-width", "2"));
+			};
+		}
 	}
 
 	//console.log();
