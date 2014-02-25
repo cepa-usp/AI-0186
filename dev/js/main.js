@@ -87,6 +87,7 @@ function montaTela(){
 		prev.attr("class", "");
 		$("#title").html("Arraste o slider");
 		raphs[tgId].gPt = raphs[tgId].r.circle(raphs[tgId].pt.x, raphs[tgId].pt.y, 4).attr("fill", "#FF0000");
+		raphs[tgId].subPathInc = true;
 		$("#slider").show();
 		ds.html("Distância: 0");
 		ds.show();
@@ -134,6 +135,10 @@ function retornar(){
 	}else if(currentTela == 2){
 		currentTela = 1;
 		raphs[tgId].gPt.remove();
+		raphs[tgId].subPath.remove();
+		raphs[tgId].subPath = null;
+		raphs[tgId].subPathInc = false;
+		//raphs[tgId].subPathString = null;
 		$("#slider").hide();
 		if(tgId == "path2"){
 			$("#show").attr("checked", false);
@@ -215,6 +220,67 @@ function sliderMoving(x, y){
 	else if(newLen < 0) newLen += raphs[tgId].length;
 
 	var newPt = raphs[tgId].path.getPointAtLength(newLen);
+
+	if(raphs[tgId].subPathInc){
+		var pathsDrag = [];
+		var from = raphs[tgId].iniLength;
+		var to = newLen;
+		if(sliderVal < 0){
+			if(from < raphs[tgId].length/2){
+				if(to >= from + raphs[tgId].length/2){
+					pathsDrag.push(raphs[tgId].path.getSubpath(0, from));
+					pathsDrag.push(raphs[tgId].path.getSubpath(to, raphs[tgId].length));
+				}else{
+					if(from > to){
+						var aux = from;
+						from = to;
+						to = aux;
+					}
+					pathsDrag.push(raphs[tgId].path.getSubpath(from, to));
+				}
+			}else{
+				if(from > to){
+					var aux = from;
+					from = to;
+					to = aux;
+				}
+				pathsDrag.push(raphs[tgId].path.getSubpath(from, to));
+			}
+		}else{
+			if(from > raphs[tgId].length/2){
+				if(to <= from - raphs[tgId].length/2){
+					pathsDrag.push(raphs[tgId].path.getSubpath(from, raphs[tgId].length));
+					pathsDrag.push(raphs[tgId].path.getSubpath(0, to));
+				}else{
+					if(from > to){
+						var aux = from;
+						from = to;
+						to = aux;
+					}
+					pathsDrag.push(raphs[tgId].path.getSubpath(from, to));
+				}
+			}else{
+				if(from > to){
+					var aux = from;
+					from = to;
+					to = aux;
+				}
+				pathsDrag.push(raphs[tgId].path.getSubpath(from, to));
+			}
+		}
+		
+
+		//raphs[tgId].subPathString = raphs[tgId].path.getSubpath(from, to);
+
+		if(raphs[tgId].subPath) raphs[tgId].subPath.remove();//raphs[tgId].subPath.attr("path", raphs[tgId].subPathString);
+		//else raphs[tgId].subPath = raphs[tgId].r.path(raphs[tgId].subPathString).attr("stroke-width", "2");
+		raphs[tgId].subPath = raphs[tgId].r.set();
+		for (var i = 0; i < pathsDrag.length; i++) {
+			raphs[tgId].subPath.push(raphs[tgId].r.path(pathsDrag[i]).attr("stroke-width", "2"));
+		};
+	}
+
+	//console.log();
 
 	raphs[tgId].gPt.attr("cx", newPt.x);
 	raphs[tgId].gPt.attr("cy", newPt.y);
