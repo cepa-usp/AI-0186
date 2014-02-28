@@ -55,12 +55,25 @@ function init(){
 
 	next.on("click", avancar);
 	prev.on("click", retornar);
+	next.on("mouseover", over);
+	prev.on("mouseover", over);
+	next.on("mouseout", out);
+	prev.on("mouseout", out);
 
 	$("#slider").hide();
 	$("#distAngle").hide();
 	$("#show").on("click", showhideAngle);
 
 	montaTela(currentTela);
+}
+
+function over(e){
+	if($(e.target).hasClass("inativo")) return;
+	$(e.target).css("font-weight", "bold");
+}
+
+function out(e){
+	$(e.target).css("font-weight", "normal");
 }
 
 function montaTela(){
