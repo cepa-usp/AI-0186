@@ -92,7 +92,16 @@ function montaTela(){
 		ds.html("Distância: 0");
 		ds.show();
 		$("#slider").css("z-index", 200);
-		slider.setValue(0.5, 0);
+
+		if(tgId == "path1" || tgId == "path2"){
+			sliderIni = 0.5;
+			slider.setValue(0.5, 0);
+		}else{
+			var sliderVal = raphs[tgId].iniLength/raphs[tgId].length;
+			sliderIni = sliderVal;
+			slider.setValue(sliderVal, 0, true);
+		}
+
 		if(tgId == "path2"){
 			$("#show").attr("checked", false);
 			check.show();
@@ -208,12 +217,12 @@ function canvasClick(e){
 		raphs[tgId].iniLength = iniLength;
 	}
 }
-
+var sliderIni = 0.5;
 function sliderMoving(x, y){
 	//console.log(x);
 	if(!tgId) return;
 
-	var sliderVal = (x - 0.5) * raphs[tgId].length;
+	var sliderVal = (x - sliderIni) * raphs[tgId].length;
 	var newLen = raphs[tgId].iniLength + sliderVal;
 
 	if(newLen > raphs[tgId].length) newLen -= raphs[tgId].length;
@@ -366,7 +375,7 @@ function getRpath(){
 	//var passo = anguloFinal > anguloInicial ? (anguloFinal - anguloInicial)/100 : (anguloInicial - anguloFinal)/100;
 	var passo = 1// * (anguloFinal > anguloInicial ? 1 : -1);//(anguloFinal - anguloInicial)/100;
 	//console.log(anguloFinal - anguloInicial);
-	$("#distAngle").html((anguloFinal - anguloInicial).toFixed(1) + "º");
+	$("#distAngle").html(((anguloFinal - anguloInicial) * -1).toFixed(1) + "º");
 
 	if(anguloFinal < anguloInicial){
 		var aux = anguloFinal;
