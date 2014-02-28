@@ -69,7 +69,7 @@ function init(){
 
 function over(e){
 	if($(e.target).hasClass("inativo")) return;
-	$(e.target).css("font-weight", "bold").css("background-color", "#CCCCCC");
+	$(e.target).css("font-weight", "bold").css("background-color", "#CC0000");
 }
 
 function out(e){

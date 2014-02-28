@@ -62,25 +62,31 @@ body{
 			position: absolute;
 			left: 10px;
 			top: 10px;
-			width: 50px;
-			height: 30px;
-			line-height: 30px;
+			/*width: 50px;*/
+			height: 20px;
+			line-height: 20px;
 			cursor: pointer;
 			font-size: 12px;
 			text-align: center;
+			padding: 5px;
+			padding-left: 8px;
+			padding-right: 8px;
 		}
 
 		#next{
 			position: absolute;
 			right: 10px;
 			top: 10px;
-			width: 50px;
-			height: 30px;
-			line-height: 30px;
+			/*width: 50px;*/
+			height: 20px;
+			line-height: 20px;
 			text-align: right;
 			cursor: pointer;
 			font-size: 12px;
 			text-align: center;
+			padding: 5px;
+			padding-left: 8px;
+			padding-right: 8px;
 		}
 
 		#dist{
