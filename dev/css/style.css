@@ -67,6 +67,7 @@ body{
 			line-height: 30px;
 			cursor: pointer;
 			font-size: 12px;
+			text-align: center;
 		}
 
 		#next{
@@ -79,6 +80,7 @@ body{
 			text-align: right;
 			cursor: pointer;
 			font-size: 12px;
+			text-align: center;
 		}
 
 		#dist{
