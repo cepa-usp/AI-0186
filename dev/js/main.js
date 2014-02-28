@@ -69,11 +69,11 @@ function init(){
 
 function over(e){
 	if($(e.target).hasClass("inativo")) return;
-	$(e.target).css("font-weight", "bold").css("background-color", "#CC0000");
+	$(e.target).css("font-weight", "bold").css("background-color", "#F55F5F").css("color", "white");
 }
 
 function out(e){
-	$(e.target).css("font-weight", "normal").css("background-color", "transparent");
+	$(e.target).css("font-weight", "normal").css("background-color", "transparent").css("color", "black");
 }
 
 function montaTela(){
