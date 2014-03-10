@@ -14,6 +14,7 @@ var ds;
 var r = 210;
 var cx = 390;
 var cy = 230;
+var changeDir = false;
 
 var inicialPosition = {
 	path0: {x:10, y:10},
@@ -59,7 +60,19 @@ function init(){
 	prev.on("mouseover", over);
 	next.on("mouseout", out);
 	prev.on("mouseout", out);
+	$("#changeDir").on("click", function(){
+		//changeDir = !changeDir;
+		if(changeDir){
+			changeDir = false;
+			$("#changeDir").html("-->");
+		}else{
+			changeDir = true;
+			$("#changeDir").html("<--");
+		}
+		updateDS();
+	});
 
+	$("#changeDir").hide();
 	$("#slider").hide();
 	$("#distAngle").hide();
 	$("#show").on("click", showhideAngle);
@@ -102,7 +115,8 @@ function montaTela(){
 		raphs[tgId].gPt = raphs[tgId].r.circle(raphs[tgId].pt.x, raphs[tgId].pt.y, 4).attr("fill", "#FF0000");
 		raphs[tgId].subPathInc = true;
 		$("#slider").show();
-		ds.html("Distância: 0");
+		$("#changeDir").show();
+		ds.html("Coordenada: 0");
 		ds.show();
 		$("#slider").css("z-index", 200);
 
@@ -167,6 +181,9 @@ function retornar(){
 			check.hide();
 		}
 		ds.hide();
+		$("#changeDir").hide();
+		changeDir = false;
+		$("#changeDir").html("-->");
 		slider.setValue(0.5, 0);
 	}
 	montaTela();
@@ -310,9 +327,15 @@ function sliderMoving(x, y){
 	raphs[tgId].gPt.attr("cy", newPt.y);
 	raphs[tgId].pt = newPt;
 
-	ds.html("Distância: " + sliderVal.toFixed(0));
+	ds.html("Coordenada: " + sliderVal.toFixed(0) * (changeDir ? -1 : 1));
 
 	showhideAngle();
+}
+
+function updateDS(){
+	console.log(slider.getValue());
+	var sliderVal = (slider.getValue()[0] - sliderIni) * raphs[tgId].length;
+	ds.html("Coordenada: " + sliderVal.toFixed(0) * (changeDir ? -1 : 1));
 }
 
 function showhideAngle(){

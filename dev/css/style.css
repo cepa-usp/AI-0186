@@ -99,6 +99,17 @@ body{
 			z-index: 300;
 		}
 
+		#changeDir{
+			position: absolute;
+			left: 280px;
+			top: 560px;
+			height: 20px;
+			text-align: center;
+			z-index: 300;
+			cursor: pointer;
+			font-weight: bold;
+		}
+
 		#check{
 			position: absolute;
 			left: 635px;
