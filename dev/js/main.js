@@ -56,21 +56,23 @@ function init(){
 
 	next.on("click", avancar);
 	prev.on("click", retornar);
-	next.on("mouseover", over);
+	/*next.on("mouseover", over);
 	prev.on("mouseover", over);
 	next.on("mouseout", out);
-	prev.on("mouseout", out);
+	prev.on("mouseout", out);*/
 	$("#changeDir").on("click", function(){
 		//changeDir = !changeDir;
 		if(changeDir){
 			changeDir = false;
-			$("#changeDir").html("-->");
+			//$("#changeDir").html("-->");
 		}else{
 			changeDir = true;
-			$("#changeDir").html("<--");
+			//$("#changeDir").html("<--");
 		}
 		updateDS();
 	});
+	$(".btn").on("mouseover", over);
+	$(".btn").on("mouseout", out);
 
 	$("#changeDir").hide();
 	$("#slider").hide();
@@ -86,6 +88,7 @@ function over(e){
 }
 
 function out(e){
+	if($(e.target).hasClass("inativo")) return;
 	$(e.target).css("font-weight", "normal").css("background-color", "transparent").css("color", "black");
 }
 
@@ -93,26 +96,31 @@ function montaTela(){
 	if(currentTela == 0){
 		next.show();
 		prev.hide();
-		next.attr("class", "inativo");
+		//next.attr("class", "inativo");
+		next.addClass("inativo");
 		$("#title").html("Escolha uma das formas para iniciar");
 		$(".path-opt").on("click", optClick);
 	}else if(currentTela == 1){
 		next.show();
 		prev.show();
 		if(raphs[tgId].gPtF){
-			next.attr("class", "");
+			//next.attr("class", "");
+			next.removeClass("inativo");
 		}else{
-			next.attr("class", "inativo");
+			//next.attr("class", "inativo");
+			if(!next.hasClass("inativo")) next.addClass("inativo");
 		}
-		prev.attr("class", "");
+		//prev.attr("class", "");
+		prev.removeClass("inativo");
 		$("#title").html("Clique sobre a curva para escolher o ponto inicial");
 		$("#" + tgId).on("click", canvasClick);
 	}else if(currentTela == 2){
 		next.hide();
 		prev.show();
-		prev.attr("class", "");
+		//prev.attr("class", "");
+		prev.removeClass("inativo");
 		$("#title").html("Arraste o slider");
-		raphs[tgId].gPt = raphs[tgId].r.circle(raphs[tgId].pt.x, raphs[tgId].pt.y, 4).attr("fill", "#FF0000");
+		raphs[tgId].gPt = raphs[tgId].r.circle(raphs[tgId].pt.x, raphs[tgId].pt.y, 4).attr("fill", "#F55F5F");
 		raphs[tgId].subPathInc = true;
 		$("#slider").show();
 		$("#changeDir").show();
@@ -183,7 +191,7 @@ function retornar(){
 		ds.hide();
 		$("#changeDir").hide();
 		changeDir = false;
-		$("#changeDir").html("-->");
+		//$("#changeDir").html("-->");
 		slider.setValue(0.5, 0);
 	}
 	montaTela();
@@ -236,7 +244,8 @@ function canvasClick(e){
 	};
 
 	if(minDist < 5){
-		next.attr("class", "");
+		//next.attr("class", "");
+		next.removeClass("inativo");
 		if(raphs[tgId].gPtF) raphs[tgId].gPtF.remove();
 
 		raphs[tgId].gPtF = raphs[tgId].r.circle(pt.x, pt.y, 6).attr("stroke-width", "1");
@@ -333,7 +342,7 @@ function sliderMoving(x, y){
 }
 
 function updateDS(){
-	console.log(slider.getValue());
+	//console.log(slider.getValue());
 	var sliderVal = (slider.getValue()[0] - sliderIni) * raphs[tgId].length;
 	ds.html("Coordenada: " + sliderVal.toFixed(0) * (changeDir ? -1 : 1));
 }

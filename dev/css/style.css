@@ -58,19 +58,22 @@ body{
 			text-align: center;
 		}
 
+		.btn{
+			height: 20px;
+			line-height: 20px;
+			cursor: pointer;
+			text-align: center;
+			padding: 5px;
+			padding-left: 8px;
+			padding-right: 8px;
+		}
+
 		#prev{
 			position: absolute;
 			left: 10px;
 			top: 10px;
 			/*width: 50px;*/
-			height: 20px;
-			line-height: 20px;
-			cursor: pointer;
 			font-size: 12px;
-			text-align: center;
-			padding: 5px;
-			padding-left: 8px;
-			padding-right: 8px;
 		}
 
 		#next{
@@ -78,15 +81,7 @@ body{
 			right: 10px;
 			top: 10px;
 			/*width: 50px;*/
-			height: 20px;
-			line-height: 20px;
-			text-align: right;
-			cursor: pointer;
 			font-size: 12px;
-			text-align: center;
-			padding: 5px;
-			padding-left: 8px;
-			padding-right: 8px;
 		}
 
 		#dist{
@@ -101,13 +96,10 @@ body{
 
 		#changeDir{
 			position: absolute;
-			left: 280px;
-			top: 560px;
-			height: 20px;
-			text-align: center;
+			right: 50px;
+			bottom: 14px;
 			z-index: 300;
-			cursor: pointer;
-			font-weight: bold;
+			font-size: 12px;
 		}
 
 		#check{
