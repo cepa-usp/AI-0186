@@ -178,7 +178,7 @@ function retornar(){
 		shrinkPath();
 	}else if(currentTela == 2){
 		currentTela = 1;
-		raphs[tgId].gPt.remove();
+		if(raphs[tgId].gPt) raphs[tgId].gPt.remove();
 		if(raphs[tgId].subPath) raphs[tgId].subPath.remove();
 		raphs[tgId].subPath = null;
 		raphs[tgId].subPathInc = false;
