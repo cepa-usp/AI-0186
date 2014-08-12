@@ -37,7 +37,7 @@ function init(){
 
 		var raph = {};
 		raph.r = Raphael("path" + i);
-		raph.r.setViewBox(0, 0, 780, 540, true);
+		raph.r.setViewBox(0, 0, 780, 540);
 		raph.r.canvas.setAttribute('preserveAspectRatio', 'none');
 
 		raph.path = raph.r.path(paths["path" + i]);
@@ -179,7 +179,7 @@ function retornar(){
 	}else if(currentTela == 2){
 		currentTela = 1;
 		raphs[tgId].gPt.remove();
-		raphs[tgId].subPath.remove();
+		if(raphs[tgId].subPath) raphs[tgId].subPath.remove();
 		raphs[tgId].subPath = null;
 		raphs[tgId].subPathInc = false;
 		//raphs[tgId].subPathString = null;
